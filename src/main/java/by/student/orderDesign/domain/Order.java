@@ -8,7 +8,6 @@ public class Order {
     private final String id;
     private final String userId;
     private final List<OrderItem> items = new ArrayList<>();
-    private double totalPrice = 0;
     private OrderStatus status = OrderStatus.IN_VALIDATION;
     private Date expectedDeliveryDate;
     private Address address;
@@ -47,6 +46,10 @@ public class Order {
     }
 
     public double getTotalPrice() {
+        double totalPrice = 0;
+        for(OrderItem item : this.getItems()) {
+            totalPrice += item.getPrice();
+        }
         return totalPrice;
     }
 
@@ -92,11 +95,9 @@ public class Order {
 
     public void addItem(String itemId, String name, int quantity, double price, long dateOfManufactureMs, long expirationDateMs, long guarantyMs) {
         items.add(new OrderItem(itemId, name, quantity, price, dateOfManufactureMs, expirationDateMs, guarantyMs));
-        totalPrice += price;
     }
 
     public void addItem(OrderItem item) {
         items.add(item);
-        totalPrice += item.getPrice();
     }
 }

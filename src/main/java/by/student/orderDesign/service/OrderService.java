@@ -1,26 +1,30 @@
 package by.student.orderDesign.service;
 
-import by.student.orderDesign.domain.Address;
 import by.student.orderDesign.domain.Order;
+import by.student.orderDesign.domain.OrderItem;
 import by.student.orderDesign.domain.OrderStatus;
+import by.student.orderDesign.storage.OrderItemStorage;
 import by.student.orderDesign.storage.OrderStorage;
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.List;
+import java.util.UUID;
 
 public class OrderService {
 
     private final OrderStorage storage;
+    private final OrderItemStorage itemStorage;
 
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class.getName());
 
-    public OrderService(OrderStorage orderStorage) {
+    public OrderService(OrderStorage orderStorage, OrderItemStorage orderItemStorage) {
         this.storage = orderStorage;
+        this.itemStorage = orderItemStorage;
+
     }
 
-    public void placeOrder(Order order) throws NullPointerException {
+    public String placeOrder(Order order) throws NullPointerException {
         Preconditions.checkNotNull(order, "Null order");
         Preconditions.checkNotNull(order.getAddress(), "Null address");
         Preconditions.checkNotNull(order.getId(), "Null id");
@@ -35,8 +39,13 @@ public class OrderService {
         order.setStatus(OrderStatus.ACCEPTED);
 
         storage.addOrder(order);
+        for(OrderItem item : order.getItems()) {
+            itemStorage.addOrderItem(item);
+        }
 
         logger.info("Order with orderId: {} placed", order.getId());
+
+        return order.getId();
     }
 
     public List<Order> loadAllByUserId(String userId) {

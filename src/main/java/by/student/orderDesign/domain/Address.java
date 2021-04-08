@@ -2,11 +2,11 @@ package by.student.orderDesign.domain;
 
 public class Address {
 
-    private String country;
-    private String region;
-    private String district;
-    private String street;
-    private String numberOfHouse;
+    private final String country;
+    private final String region;
+    private final String district;
+    private final String street;
+    private final String numberOfHouse;
     private String numberOfFlat;
 
     public Address(String country, String region, String district, String street, String numberOfHouse) {
@@ -52,30 +52,6 @@ public class Address {
 
     public String getNumberOfFlat() {
         return numberOfFlat;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public void setNumberOfHouse(String numberOfHouse) {
-        this.numberOfHouse = numberOfHouse;
-    }
-
-    public void setNumberOfHouse(int numberOfHouse) {
-        this.numberOfHouse = String.valueOf(numberOfHouse);
     }
 
     public void setNumberOfFlat(String numberOfFlat) {

@@ -4,6 +4,10 @@ import by.student.orderDesign.domain.OrderItem;
 
 public class OrderItemStorage {
 
+    public OrderItemStorage() {
+
+    }
+
     public void addOrderItem(OrderItem orderItem) {
         throw new UnsupportedOperationException("Not implemented");
     }
